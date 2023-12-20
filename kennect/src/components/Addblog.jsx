@@ -1,100 +1,78 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   TextField,
   Button,
   Typography,
   Box,
-  TextareaAutosize,
   Container,
 } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 const Addblog = () => {
-  const [name, setName] = useState('');
-  const [post, setpost] = useState('');
-  const [showCommentBox, setShowCommentBox] = useState(false);
-  const [comment, setComment] = useState('');
+  const [title, settitle] = useState('');
+  const [post, setPost] = useState('');
+  const navigate=useNavigate()
 
-  const handleAddComment = () => {
-    setShowCommentBox(true);
-  };
+  const handlePost = async () => {
+    const obj = {
+      title: title,
+      content: post
+    };
+    const body = JSON.stringify(obj)
 
-  const handleSubmitComment = () => {
-    // Perform submit action (e.g., send comment to backend)
-    console.log('Submitted Comment:', comment);
-    // Reset fields
-    setComment('');
-    setShowCommentBox(false);
+    try {
+      console.log(obj)
+      const res = await axios.post('http://localhost:9000/posts', obj, {
+      });
+      console.log(res.data, 'post');
+      // Handle success message or redirect if needed
+    } catch (error) {
+      console.error('Error while posting:', error);
+      // Handle error state or log the specific error received
+    }
+    navigate('/allblog')
+
   };
 
   return (
-    <>
-    <Container maxWidth='sm' style={{ marginTop: '30px' ,boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px'
-    
-    
-    }}>
-    <Typography variant="h5">Add Your Name</Typography>
-    <TextField required
-        label="Enter your name"
+    <Container maxWidth='lg' style={{ height: '70vh', marginTop: '30px', boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px' }}>
+      <Typography variant="h5">Add Your Title</Typography>
+      <TextField
+        required
+        label="Enter your title"
         variant="outlined"
-        
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={title} // Bind value to 'name' state
+        onChange={(e) => settitle(e.target.value)}
         style={{ marginBottom: '20px' }}
       />
+
       <Typography variant="h5" gutterBottom>
         Add Your Post
       </Typography>
+
       <Box display="flex" flexDirection="column" alignItems="center">
-        <TextField 
-        required
+        <TextField
+          fullWidth
+          multiline
+          rows={13}
+          required
           label="Your Post"
           variant="outlined"
-          value={post}
-          onChange={(e) => setpost(e.target.value)}
-          style={{ marginBottom: '20px' }}
+          value={post} // Bind value to 'post' state
+          onChange={(e) => setPost(e.target.value)}
+          style={{ height: '40vh', marginBottom: '20px' }}
         />
-        <Button
-           disabled={name==='' &&  post===''}
 
-          variant="contained"
-          color="primary"
-          onClick={handleAddComment}
-          style={{ marginBottom: '20px' }}
+        <Button
+          onClick={handlePost} // Call handlePost on button click
+          disabled={title === '' || post === ''}
+          variant='contained'
         >
-          Add Your Comment
+          Post
         </Button>
-        {showCommentBox && (
-          <Box width="100%">
-            <TextareaAutosize
-              placeholder="Type your comment here..."
-              minRows={3}
-              maxRows={6}
-              // value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              style={{
-                width: '90%',
-                marginBottom: '20px',
-                padding: '10px',
-                fontSize: '16px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                resize: 'vertical',
-              }}
-            />
-            <Button 
-              variant="contained"
-              color="primary"
-              onClick={handleSubmitComment}
-            >
-              Submit
-            </Button>
-            <br/>
-          </Box>
-        )}
       </Box>
-      <hr/>
+      <hr />
     </Container>
-    </>
   );
 };
 
