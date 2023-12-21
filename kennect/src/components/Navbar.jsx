@@ -24,6 +24,7 @@ const pages = ['Add your Blog', 'All Blogs'];
 function ResponsiveAppBar() {
     const { user, isAuthenticated, isLoading } = useAuth0();
 
+    
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -130,10 +131,10 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
   {isAuthenticated ? 
-    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , gap:'4%'} }}>
 
 <Link to="/addblog" style={{ textDecoration: 'none', color: 'inherit' }}>
-<Typography variant="body1">Add Your Blog</Typography>
+<Typography variant="body1">Write</Typography> 
 </Link>
 
 <Link to="/allblog" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -161,7 +162,7 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
 
-    </AppBar>
+    </AppBar><br/><br></br>
 
 </>
   );

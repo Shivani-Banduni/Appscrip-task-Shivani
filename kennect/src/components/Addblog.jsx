@@ -30,16 +30,18 @@ const Addblog = () => {
       console.error('Error while posting:', error);
       // Handle error state or log the specific error received
     }
-    navigate('/allblog')
 
+    alert()
+    navigate('/allblog')
+alert('Your data has been saved successfully')
   };
 
   return (
-    <Container maxWidth='lg' style={{ height: '70vh', marginTop: '30px', boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px' }}>
-      <Typography variant="h5">Add Your Title</Typography>
+    <Container maxWidth='xlg' style={{ height: '70vh', marginTop: '30px', boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px' }}>
+      <Typography variant="h5">Name</Typography>
       <TextField
         required
-        label="Enter your title"
+        label="Enter your Name"
         variant="outlined"
         value={title} // Bind value to 'name' state
         onChange={(e) => settitle(e.target.value)}

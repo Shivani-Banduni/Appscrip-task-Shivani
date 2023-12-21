@@ -8,15 +8,20 @@ import LoginButton from './components/Login';
 import BlogHomePage from './components/Home';
 import { useAuth0 } from '@auth0/auth0-react';
 import Addcomment from './components/Addcomment';
+import Name from './components/Name';
+import { useNavigate } from 'react-router-dom';
 function App() {
+  const navigate=useNavigate()
   const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(isAuthenticated,"isAuthenticated")
   return (
     <div className="App">
 <ResponsiveAppBar/>
 {
-  isAuthenticated?<Routes>
+  isAuthenticated?  <Routes>
 <Route path='/' element={<BlogHomePage/>}></Route>
+      
+      <Route path='/name' element={<Name/>}></Route>
 
       <Route path='/addblog' element={<Addblog/>}></Route>
       <Route path='/allblog' element={<Allblog/>}></Route>
@@ -24,7 +29,8 @@ function App() {
 
 
 
-    </Routes>:    <Routes>
+    </Routes>:  
+      <Routes>
 <Route path='/' element={<BlogHomePage/>}></Route>
     </Routes>    
 }

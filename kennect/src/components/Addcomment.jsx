@@ -6,33 +6,46 @@ import {
     Box,
     Container,
   } from '@mui/material';
+import axios from 'axios';
 
-const Addcomment = () => {
-const [comment,setcomment]=React.useState('')
+const Addcomment = ({id}) => {
+const [comment,setcomment]=React.useState('');
+const [flag ,setFlag] = React.useState(true);
 
 const handlecomment=()=>{
 console.log(comment,'comment')
+const postcomment={
+    postId:id,
+    text:comment
+}
+
+
+axios.post('http://localhost:9000/comments',postcomment)
+
+setFlag(false)
+window.location.reload()
 }
 
     return (
+        flag?
     <Container maxWidth='lg' >
         <Typography>
             <Box>
                 <TextField   onChange={(e)=>setcomment(e.target.value)}
-                style={{overflow:'scroll'}}
                 value={comment}
-                style={{  marginTop: '30px', boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px' }}
-                 fullWidth
-                label="Your Post"
+                className='comment'
+                 
+                label="Your comment"
           variant="outlined"
           multiline
-          rows={23.3}
+          rows={7}
           required> 
                 </TextField>
             </Box>
-        </Typography>
+        </Typography><br/>
         <Button  onClick={handlecomment} variant='contained'>Comment</Button>
     </Container>
+    :""
     );
 }
 
